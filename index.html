@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FA Wafer Order Form</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <nav>
+      <h1>FA Order Submission</h1>
+    </nav>
+    <main>
+      <div class="sidebar">
+        <h3>FIB/SEM</h3>
+        <h3>Episcope</h3>
+        <h3>Prober</h3>
+      </div>
+
+      <div class="main-content">
+        <form id="waferForm">
+          <div class="form-section" id="constants">
+            <div class="form-group">
+              <label name="referenceId">Reference ID</label>
+              <input
+                type="text"
+                name="referenceId"
+                id="referenceId"
+                placeholder="Enter Reference ID"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label name="lotId">Lot ID</label>
+              <input
+                type="text"
+                name="lotId"
+                id="lotId"
+                placeholder="Enter Lot ID"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label name="processStep">Process Step</label>
+              <input
+                type="text"
+                name="processStep"
+                id="processStep"
+                placeholder="Enter latest process step"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label name="tool">Analysis Type</label>
+              <select name="tool" id="tool" required>
+                <option></option>
+                <option>SEM</option>
+                <option>FIB</option>
+                <option>EDS</option>
+                <option>STEM</option>
+                <option>EPISCOPE</option>
+                <option>PROBER</option>
+              </select>
+            </div>
+          </div>
+          <button type="button" class="wafer-button" onclick="addWafer()">
+            Add Wafer
+          </button>
+          <div class="form-section" id="wafer-container">
+            <div class="wafer-section">
+              <div class="label-container">
+                <label>Wafer ID</label>
+              </div>
+              <input
+                type="text"
+                name="wafer-id"
+                placeholder="Enter wafer Id"
+                required
+              />
+              <button
+                type="button"
+                class="field-button"
+                onclick="addField(this)"
+              >
+                Add Field
+              </button>
+              <div class="field-container">
+                <div class="field-section">
+                  <div class="label-container">
+                    <label>Field ID</label>
+                  </div>
+                  <input
+                    type="text"
+                    name="field-id"
+                    placeholder="Enter field Id"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="subfield-button"
+                    onclick="addSubfield(this)"
+                  >
+                    Add Subfield
+                  </button>
+                  <div class="subfield-container">
+                    <div class="subfield-section">
+                      <div class="label-container">
+                        <label>Subfield ID</label>
+                      </div>
+                      <input
+                        class="sufield-input"
+                        type="text"
+                        name="subfield-id"
+                        placeholder="Enter subfield Id"
+                        required
+                      />
+                      <div class="site-container">
+                        <div class="label-container">
+                          <label>Total Sites</label>
+                        </div>
+                        <input type="number" value="1" min="1" required />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" id="submit-button">Create Order</button>
+        </form>
+
+        <div id="result"></div>
+
+        <h2>Order Log</h2>
+        <table id="orderTable">
+          <thead>
+            <tr>
+              <th>Reference ID</th>
+              <th>Lot ID</th>
+              <th>Process Step</th>
+              <th>Analysis Method</th>
+              <th>Total Sites</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <script src="static/scripts.js"></script>
+
+    <script>
+      function addWafer() {
+        // Wafer Container holds all wafers
+        const waferContainer = document.getElementById("wafer-container");
+        // WaferDiv holds a single wafer
+        const waferSection = document.createElement("div");
+        waferSection.className = "wafer-section";
+        const waferInput = document.createElement("input");
+        waferInput.className = "wafer-input";
+        waferInput.type = "text";
+        waferInput.placeholder = "Enter Wafer ID";
+        waferInput.name = "wafer-id";
+
+        // Create button to delete individual wafer blocks
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "deletebtn";
+        deleteButton.textContent = "❌";
+        deleteButton.onclick = () => waferSection.remove(); // Typo here, should be waferSection.remove()
+
+        // Create Label container
+        const labelContainer = document.createElement("div");
+        labelContainer.className = "label-container";
+        const label = document.createElement("label");
+        label.textContent = "Wafer ID";
+
+        // Add the label and delete button to label container
+        labelContainer.appendChild(label);
+        labelContainer.appendChild(deleteButton);
+
+        // Create add field button
+        const fieldButton = document.createElement("button");
+        fieldButton.className = "field-button";
+        fieldButton.textContent = "Add Field";
+        fieldButton.type = "button";
+        fieldButton.onclick = function () {
+          addField(this);
+        };
+
+        // Field Elements
+        const fieldContainer = document.createElement("div");
+        fieldContainer.className = "field-container";
+
+        const fieldLabelContainer = document.createElement("div");
+        fieldLabelContainer.className = "label-container";
+        const fieldLabel = document.createElement("label");
+        fieldLabel.textContent = "Field ID";
+
+        const fieldSection = document.createElement("div");
+        fieldSection.className = "field-section";
+
+        const fieldInput = document.createElement("input");
+        fieldInput.className = "field-input";
+        fieldInput.type = "text";
+        fieldInput.placeholder = "Enter Field ID";
+        fieldInput.name = "field-id";
+
+        const addSubfieldButton = document.createElement("button");
+        addSubfieldButton.type = "button";
+        addSubfieldButton.textContent = "Add Subfield";
+        addSubfieldButton.className = "subfield-button";
+        addSubfieldButton.onclick = function () {
+          addSubfield(this);
+        };
+        //subfield Elements
+        const subfieldContainer = document.createElement("div");
+        subfieldContainer.className = "subfield-container";
+
+        const subfieldSection = document.createElement("div");
+        subfieldSection.className = "subfield-section";
+
+        const subfieldLabelContainer = document.createElement("div");
+        subfieldLabelContainer.className = "label-container";
+        const subfieldLabel = document.createElement("label");
+        subfieldLabel.textContent = "Subfield ID";
+
+        subfieldLabelContainer.appendChild(subfieldLabel);
+
+        const subfieldInput = document.createElement("input");
+        subfieldInput.className = "sufield-input";
+        subfieldInput.type = "text";
+        subfieldInput.name = "subfield-id";
+        subfieldInput.placeholder = "Enter Subfield ID";
+
+        // Site Elements
+        const siteContainer = document.createElement("div");
+        siteContainer.className = "site-container";
+        const siteLabel = document.createElement("label");
+        siteLabel.textContent = "Total Sites";
+        const siteInput = document.createElement("input");
+        siteInput.type = "number";
+        siteInput.value = 1;
+
+        siteContainer.appendChild(siteLabel);
+        siteContainer.appendChild(siteInput);
+
+        // structuing field elements
+        fieldLabelContainer.appendChild(fieldLabel);
+
+        fieldSection.appendChild(fieldLabelContainer);
+        fieldSection.appendChild(fieldInput);
+
+        subfieldSection.appendChild(subfieldLabelContainer);
+        subfieldSection.appendChild(subfieldInput);
+        subfieldSection.appendChild(siteContainer);
+
+        subfieldContainer.appendChild(subfieldSection);
+
+        fieldSection.appendChild(addSubfieldButton);
+        fieldSection.appendChild(subfieldContainer);
+
+        fieldContainer.appendChild(fieldSection);
+
+        // Add the input and field button to the single wafer block
+        waferSection.appendChild(labelContainer);
+        waferSection.appendChild(waferInput);
+        waferSection.appendChild(fieldButton);
+        waferSection.appendChild(fieldContainer);
+        // Add the single wafer block to the container that holds multiple wafers
+        waferContainer.appendChild(waferSection);
+      }
+      function addField(button) {
+        const waferSection = button.closest(".wafer-section");
+        const fieldContainer = waferSection.querySelector(".field-container");
+
+        // Field Elements
+        const fieldLabelContainer = document.createElement("div");
+        fieldLabelContainer.className = "label-container";
+        const fieldLabel = document.createElement("label");
+        fieldLabel.textContent = "Field ID";
+
+        const fieldSection = document.createElement("div");
+        fieldSection.className = "field-section";
+
+        const fieldDeleteButton = document.createElement("button");
+        fieldDeleteButton.type = "button";
+        fieldDeleteButton.className = "deletebtn";
+        fieldDeleteButton.textContent = "❌";
+        fieldDeleteButton.onclick = () => fieldSection.remove();
+
+        const fieldInput = document.createElement("input");
+        fieldInput.className = "field-input";
+        fieldInput.type = "text";
+        fieldInput.placeholder = "Enter Field ID";
+        fieldInput.name = "field-id";
+
+        // Subfield Elements
+        const addSubfieldButton = document.createElement("button");
+        addSubfieldButton.type = "button";
+        addSubfieldButton.textContent = "Add Subfield";
+        addSubfieldButton.className = "subfield-button";
+        addSubfieldButton.onclick = function () {
+          addSubfield(this);
+        };
+
+        const subfieldContainer = document.createElement("div");
+        subfieldContainer.className = "subfield-container";
+
+        const subfieldSection = document.createElement("div");
+        subfieldSection.className = "subfield-section";
+
+        const subfieldLabelContainer = document.createElement("div");
+        subfieldLabelContainer.className = "label-container";
+        const subfieldLabel = document.createElement("label");
+        subfieldLabel.textContent = "Subfield ID";
+
+        subfieldLabelContainer.appendChild(subfieldLabel);
+
+        const subfieldInput = document.createElement("input");
+        subfieldInput.className = "sufield-input";
+        subfieldInput.type = "text";
+        subfieldInput.name = "subfield-id";
+        subfieldInput.placeholder = "Enter Subfield ID";
+
+        // Site Elements
+        const siteContainer = document.createElement("div");
+        siteContainer.className = "site-container";
+        const siteLabel = document.createElement("label");
+        siteLabel.textContent = "Total Sites";
+        const siteInput = document.createElement("input");
+        siteInput.type = "number";
+        siteInput.value = 1;
+
+        siteContainer.appendChild(siteLabel);
+        siteContainer.appendChild(siteInput);
+
+        // structuing field elements
+        fieldLabelContainer.appendChild(fieldLabel);
+        fieldLabelContainer.appendChild(fieldDeleteButton);
+        fieldSection.appendChild(fieldLabelContainer);
+        fieldSection.appendChild(fieldInput);
+
+        subfieldSection.appendChild(subfieldLabelContainer);
+        subfieldSection.appendChild(subfieldInput);
+        subfieldSection.appendChild(siteContainer);
+
+        subfieldContainer.appendChild(subfieldSection);
+
+        fieldSection.appendChild(addSubfieldButton);
+        fieldSection.appendChild(subfieldContainer);
+
+        fieldContainer.appendChild(fieldSection);
+      }
+      function addSubfield(button) {
+        const fieldSection = button.closest(".field-section");
+        const subfieldContainer = fieldSection.querySelector(
+          ".subfield-container"
+        );
+
+        const subfieldSection = document.createElement("div");
+        subfieldSection.className = "subfield-section";
+
+        const labelContainer = document.createElement("div");
+        labelContainer.className = "label-container";
+        const label = document.createElement("label");
+        label.textContent = "Subfield ID";
+
+        const subfieldInput = document.createElement("input");
+        subfieldInput.className = "sufield-input";
+        subfieldInput.type = "text";
+        subfieldInput.name = "subfield-id";
+        subfieldInput.placeholder = "Enter Subfield ID";
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "deletebtn";
+        deleteButton.textContent = "❌";
+        deleteButton.onclick = () => subfieldSection.remove();
+
+        labelContainer.appendChild(label);
+        labelContainer.appendChild(deleteButton);
+
+        // Site Elements
+        const siteContainer = document.createElement("div");
+        siteContainer.className = "site-container";
+        const siteLabel = document.createElement("label");
+        siteLabel.textContent = "Total Sites";
+        const siteInput = document.createElement("input");
+        siteInput.type = "number";
+        siteInput.value = 1;
+
+        siteContainer.appendChild(siteLabel);
+        siteContainer.appendChild(siteInput);
+
+        subfieldSection.appendChild(labelContainer);
+        subfieldSection.appendChild(subfieldInput);
+        subfieldSection.appendChild(siteContainer);
+
+        subfieldContainer.appendChild(subfieldSection);
+      }
+
+      document.getElementById("waferForm").addEventListener("submit", (e) => {
+        const order = getFormData(e);
+        console.log("Submitted object:", order); // 👈 See what gets sent
+        sendData(order); // Your existing logic
+      });
+
+      receiveData();
+    </script>
+  </body>
+</html>

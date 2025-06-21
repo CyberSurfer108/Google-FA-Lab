@@ -1,0 +1,180 @@
+[
+  {
+    "referenceId": "4567890",
+    "lotId": "FA25-2299",
+    "processStep": "PANEL",
+    "tool": "FIB",
+    "entries": [
+      {
+        "waferId": "O9471114VAE5",
+        "fieldId": "A00",
+        "subfieldId": "F3",
+        "site": "S#1"
+      },
+      {
+        "waferId": "O9471114VAE5",
+        "fieldId": "B22",
+        "subfieldId": "E1",
+        "site": "S#1"
+      },
+      {
+        "waferId": "O9471114VAE5",
+        "fieldId": "B22",
+        "subfieldId": "E1",
+        "site": "S#2"
+      },
+      {
+        "waferId": "O9471114VAE5",
+        "fieldId": "B22",
+        "subfieldId": "E1",
+        "site": "S#3"
+      },
+      {
+        "waferId": "O9471114VAE4",
+        "fieldId": "A00",
+        "subfieldId": "F3",
+        "site": "S#1"
+      },
+      {
+        "waferId": "O9471114VAE4",
+        "fieldId": "A00",
+        "subfieldId": "G1",
+        "site": "S#1"
+      },
+      {
+        "waferId": "O9471114VAE4",
+        "fieldId": "A00",
+        "subfieldId": "G1",
+        "site": "S#2"
+      }
+    ]
+  },
+  {
+    "referenceId": "4567892",
+    "lotId": "FA25-2299",
+    "processStep": "PANEL",
+    "tool": "STEM",
+    "entries": [
+      {
+        "waferId": "O9471114VAE5",
+        "fieldId": "A00",
+        "subfieldId": "F3",
+        "site": "S#1"
+      }
+    ]
+  },
+  {
+    "referenceId": "4567890",
+    "lotId": "E25-0320",
+    "processStep": "PANEL",
+    "tool": "EDS",
+    "entries": [
+      {
+        "waferId": "O9471114VAE5",
+        "fieldId": "A00",
+        "subfieldId": "F3",
+        "site": "S#1",
+        "status": "open"
+      }
+    ]
+  },
+  {
+    "referenceId": "421309536",
+    "lotId": "E25-2140",
+    "processStep": "ITO PMT",
+    "tool": "FIB",
+    "entries": [
+      {
+        "waferId": "O9035061VAE5",
+        "fieldId": "A00",
+        "subfieldId": "F3",
+        "site": "S#1",
+        "status": "open"
+      },
+      {
+        "waferId": "O9035061VAE5",
+        "fieldId": "A00",
+        "subfieldId": "F3",
+        "site": "S#2",
+        "status": "open"
+      },
+      {
+        "waferId": "O9035061VAE5",
+        "fieldId": "A00",
+        "subfieldId": "G1",
+        "site": "S#1",
+        "status": "open"
+      },
+      {
+        "waferId": "O9035061VAE5",
+        "fieldId": "C22",
+        "subfieldId": "F3",
+        "site": "S#1",
+        "status": "open"
+      },
+      {
+        "waferId": "O9035061VAE5",
+        "fieldId": "C22",
+        "subfieldId": "F3",
+        "site": "S#2",
+        "status": "open"
+      },
+      {
+        "waferId": "O9035061VAE5",
+        "fieldId": "C22",
+        "subfieldId": "G5",
+        "site": "S#1",
+        "status": "open"
+      }
+    ]
+  },
+  {
+    "referenceId": "421309536",
+    "lotId": "E25-2140",
+    "processStep": "ITO PMT",
+    "tool": "EDS",
+    "entries": [
+      {
+        "waferId": "O9035061VAE5 ",
+        "fieldId": "A00",
+        "subfieldId": "G3",
+        "site": "S#1",
+        "status": "open"
+      },
+      {
+        "waferId": "O9471108VAC3",
+        "fieldId": "A00",
+        "subfieldId": "G3",
+        "site": "S#1",
+        "status": "open"
+      },
+      {
+        "waferId": "O9035088VAG4",
+        "fieldId": "A00",
+        "subfieldId": "G3",
+        "site": "S#1",
+        "status": "open"
+      }
+    ]
+  },
+  {
+    "referenceId": "422275749",
+    "lotId": "E25-2230.1",
+    "processStep": "ITO PMT",
+    "tool": "SEM",
+    "entries": [
+      {
+        "waferId": "QA273096TSA1",
+        "fieldId": "A00",
+        "subfieldId": "F3",
+        "site": "S#1",
+        "status": "open",
+        "fib": false,
+        "sem": false,
+        "eds": false,
+        "stem": false,
+        "episcope": false
+      }
+    ]
+  }
+]
